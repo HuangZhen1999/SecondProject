@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "mybatis.org//DTD mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.demo.dao.UserMapper">
+
+	<resultMap type="User" id="userRoleName">
+		<result column="roleName" property="userRoleName"/>
+	</resultMap>
+	
+	<!-- 根据用户名称模糊查询 -->
+	<select id="getUserList" resultMap="userRoleName"  parameterType="User">
+		select u.*,r.roleName from smbms_user u,smbms_role r where u.userRole=r.id
+		<if test="userName!=null and userName!=''">
+			and userName like concat('%',#{userName},'%')
+		</if>
+	</select>
+	
+	
+	<!-- 添加用户 -->
+	<insert id="userAdd" parameterType="User">
+	insert into smbms_user(userCode,userName,userPassword,
+	gender,birthday,phone,address,
+	userRole,createdBy,creationDate,idPicPath)
+	values(#{userCode},#{userName},#{userPassword},
+	#{gender},#{birthday},#{phone},#{address},
+	#{userRole},#{createdBy},#{creationDate},#{idPicPath})
+	</insert>
+	
+	
+	<!-- 用户名密码登录 -->
+	<select id="userRegister" resultType="Integer" parameterType="User">
+		select count(1) from smbms_user where userCode=#{userCode}
+		and userPassword=#{userPassword}
+	</select>
+	
+	
+	<!-- 根据id获取User -->
+	<select id="getUserById" parameterType="int" resultType="User">
+		select * from smbms_user where id=#{id}
+	</select>
+	
+	<!-- 修改用户 -->
+	<update id="userUpdate" parameterType="User">
+		update smbms_user set 
+		userCode=#{userCode},
+		userName=#{userName},
+		userPassword=#{userPassword},
+		gender=#{gender},
+		birthday=#{birthday},
+		phone=#{phone},
+		address=#{address},
+		userRole=#{userRole},
+		modifyBy=#{modifyBy},
+		modifyDate=#{modifyDate}
+		where id=#{id}
+	</update>
+</mapper>

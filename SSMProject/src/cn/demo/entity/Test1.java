@@ -1,5 +1,5 @@
 package cn.demo.entity;
 
-public class Test {
+public class Test1 {
 
 }

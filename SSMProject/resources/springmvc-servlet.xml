@@ -36,7 +36,7 @@
         	</mvc:message-converters>
         </mvc:annotation-driven>
         
-        
+      
         <!-- 配置自定义转换器 -->
         <bean id="myConversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">
         	<property name="converters">
